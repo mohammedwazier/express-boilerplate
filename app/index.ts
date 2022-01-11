@@ -16,13 +16,25 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routing on Files Folder
-app.use(Route());
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+        next();
+    } catch (error: any) {
+        return res.status(500).send({
+            state: false,
+            message: error.message,
+            code: error.code
+        });
+    }
+}, Route());
 
 try{
     app.listen(PORT, () => {
         console.log(`Server was running on PORT : ${PORT}`);
     })
+
 }catch(error: any){
     console.log(`Error Occured: ${error.message}`);
     process.exit();
 }
+export { app as app }
