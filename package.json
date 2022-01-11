@@ -10,7 +10,7 @@
     "build": "tsc",
     "production": "yarn build && pm2 restart ./build/index.js --name ExpressBoilerPlate",
     "kill": "pm2 kill",
-    "test:unit": "yarn build && ENV_FILE=.env.test jest --watchAll --coverage --detectOpenHandles"
+    "test:unit": "yarn build && NODE_ENV=test ENV_FILE=.env.test jest --watchAll --coverage --detectOpenHandles"
   },
   "dependencies": {
     "body-parser": "^1.19.1",
