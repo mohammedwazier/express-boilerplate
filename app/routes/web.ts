@@ -16,9 +16,9 @@ const Router = () => {
 
         router.get('/user', User.index);
         router.post('/user/store', validator.body(User.querySchema), User.store);
-        router.get('/user/:id', User.show);
-        router.post('/user/:id/update', User.update);
-        router.post('/user/:id/destroy', User.destroy);
+        router.get('/user/:id', validator.query(User.idRequestSchema), User.show);
+        router.post('/user/:id/update', validator.body(User.editSchema), User.update);
+        router.post('/user/:id/destroy', validator.body(User.idRequestSchema), User.destroy);
 
         return router;
 }

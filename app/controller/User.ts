@@ -19,6 +19,12 @@ interface EditRequestSchema extends ValidatedRequestSchema {
     }
 }
 
+interface IdRequestSchema extends ValidatedRequestSchema {
+    [ContainerTypes.Query]: {
+        id: string
+    }
+}
+
 const querySchema = Joi.object({
     username: Joi.string().required(),
     name: Joi.string().required(),
@@ -32,6 +38,10 @@ const editSchema = Joi.object({
     email: Joi.string().required()
 })
 
+const idRequestSchema = Joi.object({
+    id: Joi.number().required()
+});
+
 
 let UserList: any = [];
 
@@ -39,10 +49,12 @@ let UserList: any = [];
 class User {
     public querySchema: Joi.ObjectSchema<any>;
     public editSchema: Joi.ObjectSchema<any>;
+    public idRequestSchema : Joi.ObjectSchema<any>;
 
     constructor(){
         this.querySchema = querySchema;
         this.editSchema = editSchema;
+        this.idRequestSchema = idRequestSchema;
     }
     
     public index(req: Request, res: Response): any{
@@ -68,7 +80,21 @@ class User {
 
     }
 
-    public show(req: Request, res: Response): any {
+    public show(req: ValidatedRequest<IdRequestSchema>, res: Response): any {
+        let objIndex = UserList.findIndex((obj: any) => obj.id == req.query.id);
+        if(objIndex !== -1){
+            return res.send({
+                state: true,
+                message: 'Success Get Single User List',
+                data: UserList[objIndex]
+            })
+        }else{
+            return res.send({
+                state: false,
+                message: 'Failed Get Single User List',
+                data: null
+            })
+        }
     }
 
     public edit(req: Request, res: Response): any {
@@ -96,7 +122,7 @@ class User {
 
     }
 
-    public destroy(req: Request, res: Response): any {
+    public destroy(req: ValidatedRequest<IdRequestSchema>, res: Response): any {
         let objIndex = UserList.findIndex((obj: any) => obj.id == req.query.id);
         if(objIndex !== -1){
             UserList.splice(objIndex, 1);

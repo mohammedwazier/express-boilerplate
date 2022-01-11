@@ -9,7 +9,8 @@
     "start": "ts-node-dev ./app/index.ts",
     "build": "tsc",
     "production": "yarn build && pm2 restart ./build/index.js --name ExpressBoilerPlate",
-    "kill": "pm2 kill"
+    "kill": "pm2 kill",
+    "test:unit": "yarn build && ENV_FILE=.env.test jest --watchAll --coverage --detectOpenHandles"
   },
   "dependencies": {
     "body-parser": "^1.19.1",
@@ -20,7 +21,8 @@
     "express-joi-validation": "^5.0.1",
     "joi": "^17.5.0",
     "knex": "^0.95.15",
-    "multer": "^1.4.4"
+    "multer": "^1.4.4",
+    "supertest": "^6.2.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
@@ -28,10 +30,14 @@
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.4.0",
     "@types/joi": "^17.2.3",
     "@types/knex": "^0.16.1",
     "@types/multer": "^1.4.7",
     "@types/node": "^17.0.8",
+    "@types/supertest": "^2.0.11",
+    "jest": "^27.4.7",
+    "ts-jest": "^27.1.2",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.4"
   }

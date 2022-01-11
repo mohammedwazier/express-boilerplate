@@ -3,3 +3,4 @@ build/
 .env
 files/*
 !files/.gitkeep
+coverage
