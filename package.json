@@ -6,7 +6,10 @@
   "author": "mohammedwazier <m.waziruddin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev ./app/index.ts"
+    "start": "ts-node-dev ./app/index.ts",
+    "build": "tsc",
+    "production": "yarn build && pm2 restart ./build/index.js --name ExpressBoilerPlate",
+    "kill": "pm2 kill"
   },
   "dependencies": {
     "body-parser": "^1.19.1",
